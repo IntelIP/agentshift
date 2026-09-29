@@ -1,5 +1,10 @@
 # Repository Guidelines
 
+## Code cleanup
+
+- Run `pnpm run quality:dead-code` after TypeScript or JavaScript removals. CI checks new findings on pull requests.
+- For cross-file removals, refresh Graphify and inspect callers before deleting. Confirm framework registrations in current source.
+
 ## Project Structure & Module Organization
 - `crates/`: Rust workspace crates — `server` (API + bins), `db` (SQLx models/migrations), `executors`, `services`, `utils`, `git` (Git operations), `api-types` (shared API types for local + remote), `review` (PR review tool), `deployment`, `local-deployment`, `remote`.
 - `packages/local-web/`: Local React + TypeScript app entrypoint (Vite, Tailwind). Shell source in `packages/local-web/src`.
@@ -54,5 +59,3 @@ Do not manually edit shared/remote-types.ts, instead edit crates/remote/src/bin/
 ## Security & Config Tips
 - Use `.env` for local overrides; never commit secrets. Key envs: `FRONTEND_PORT`, `BACKEND_PORT`, `HOST` 
 - Dev ports and assets are managed by `scripts/setup-dev-environment.js`.
-
-

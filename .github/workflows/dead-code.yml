@@ -1,0 +1,24 @@
+name: Dead code
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  fallow:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v4
+        with:
+          version: 10.13.1
+      - run: pnpm install --frozen-lockfile --ignore-scripts
+      - run: git fetch origin main
+      - run: npm run quality:dead-code
+        env:
+          FALLOW_BASE_REF: origin/main
